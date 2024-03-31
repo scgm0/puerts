@@ -578,7 +578,6 @@ JSModuleDef* FBackendEnv::LoadModule(JSContext* ctx, const char *name)
 
     auto Meta = JS_GetImportMeta(ctx, Ret);
     std::string str = name;
-    str = "puer:" + str;
     JS_SetPropertyStr(ctx, Meta, "url", JS_NewString(ctx, str.c_str()));
     JS_FreeValue(ctx, Meta);
 
@@ -1009,7 +1008,7 @@ void esmodule::HostInitializeImportMetaObject(v8::Local<v8::Context> Context, v8
         meta->CreateDataProperty(
             Context, 
             v8::String::NewFromUtf8(Isolate, "url").ToLocalChecked(),
-            v8::String::NewFromUtf8(Isolate, ("puer:" + iter->second).c_str()).ToLocalChecked()
+            v8::String::NewFromUtf8(Isolate, iter->second.c_str()).ToLocalChecked()
         ).ToChecked();
     }
 }
